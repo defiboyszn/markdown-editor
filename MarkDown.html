@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Markdown Editor</title>
+      <link href="all.css" rel="stylesheet">
+</head>
+
+<body style="background: #117ADE;">
+  <div id="markedapp"></div>
+</body>
+ <script type="module">
+   import Dative from 'https://cdn.jsdelivr.net/gh/dativeJs/dativejs@main/dist/dative.es.min.js';
+   import './marked.min.js';
+   import './all.js';
+   
+   var Markdown = new Dative({
+     el: '#markedapp',
+     data(){
+       return {
+         msg: '# Hello',
+         style: {
+           position: 'relative',
+           right: '5px',
+           width: '50%',
+           height: '200px',
+           background: '#282828',
+           outline: 'none',
+           color: '#fff'
+         },
+         output: {
+           position: 'relative',
+           left: '174px',
+           bottom: '258px',
+           width: '50%',
+           height: '205px',
+           border: '1px solid #000',
+           background: '#fff',
+           color: '#000'
+         },
+         up:{
+           position: 'relative',
+           bottom: '260px',
+           left: '250px',
+           color: 'orange'
+         },
+         lup:{
+           position: 'relative',
+           bottom: '0px',
+           left: '50px',
+           color: '#fff',
+         },
+         h1:{
+           color: '#fff'
+         },
+         title: 'MarkDown Editor'
+       }
+     },
+     template(){
+       return `
+        <div>
+          <h1 
+            :style="h1"
+            bind:text="title"
+            >
+            </h1>
+          <i 
+            class="fab fa-markdown fa-2x" 
+            :style="lup"
+            ></i><br />
+         <textarea 
+            :style="style" 
+            :text="msg"
+            on:input="markdowns"
+            ></textarea><br /><br />
+           <i 
+            class="fab fa-html5 fa-2x" 
+            :style="up"
+            >
+            </i><br />
+          <div
+            :style="output" 
+            ref="output">
+            </div>
+        </div>
+       `;
+     },
+     methods:{
+       markdowns: function(e){
+        this.$ref.output.innerHTML = marked(e.target.value)
+       }
+     }
+   })
+   Markdown.render()
+   
+ </script>
+</html>
